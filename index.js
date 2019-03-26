@@ -20,24 +20,6 @@ const LaunchRequestHandler = {
   },
 };
 
-const HelloHandler = {
-  canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'HelloIntent';
-  },
-  handle(handlerInput) {
-    // This is text that Alexa will speak back
-    // when the user says, "Ask code academy to say hello"
-    const speakOutput = 'Hello Codecademy';
-
-    // The response builder contains is an object that handles generating the
-    // JSON response that your skill returns.
-    return handlerInput.responseBuilder
-      .speak(speakOutput) // The text passed to speak, is what Alexa will say.
-      .getResponse();
-  },
-};
-
 function httpGet() {
   return new Promise(((resolve, reject) => {
 
@@ -154,7 +136,6 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchRequestHandler,
-    HelloHandler,
     MyFavouriteTvShow,
     HelpHandler,
     CancelAndStopHandler,
