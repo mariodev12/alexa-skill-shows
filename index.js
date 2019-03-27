@@ -77,6 +77,30 @@ const MyFavouriteTvShow = {
   },
 };
 
+const RandomShow = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'RandomIntent';
+  },
+  async handle(handlerInput) {
+    const showsForToday = [];
+    const response = await httpGet();
+
+    const data = response.filter((type) => {
+        return type.show.type === 'Scripted'
+    }).map((res) => {
+        return showsForToday.push(res.show.name)
+    })
+    
+    let random = Math.floor(Math.random() * showsForToday.length + 1);
+    
+    return handlerInput.responseBuilder
+            .speak(showsForToday[random])
+            .reprompt("What would you like?")
+            .getResponse();
+  },
+};
+
 const HelpHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
